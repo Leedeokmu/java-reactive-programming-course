@@ -45,4 +45,10 @@ public class Util {
         return new DefaultSubscriber(name);
     }
 
+    public static long measureTimeMillis(Runnable runnable) {
+        long start = System.currentTimeMillis();
+        runnable.run();
+        return System.currentTimeMillis() - start;
+    }
+
 }
