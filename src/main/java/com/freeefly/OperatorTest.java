@@ -14,7 +14,6 @@ public class OperatorTest {
             .timeout(Duration.ofSeconds(2))
             .subscribe(Util.subscriber())
         ;
-        Flux.empty()
         Util.sleepSeconds(60);
     }
 
