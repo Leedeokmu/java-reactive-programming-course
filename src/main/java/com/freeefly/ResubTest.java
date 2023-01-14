@@ -19,16 +19,16 @@ public class ResubTest {
         /**
          * retry
          */
-        getIntegers()
-                .retryWhen(Retry.from(
-                        retrySignalFlux -> {
-                            retrySignalFlux.handle((retrySignal, synchronousSink) -> {
-
-                            })
-                        }
-                ))
-                .subscribe(Util.subscriber());
-        Util.sleepSeconds(30);
+//        getIntegers()
+//                .retryWhen(Retry.from(
+//                        retrySignalFlux -> {
+//                            retrySignalFlux.handle((retrySignal, synchronousSink) -> {
+//
+//                            })
+//                        }
+//                ))
+//                .subscribe(Util.subscriber());
+//        Util.sleepSeconds(30);
     }
 
     private static Flux<Integer> getIntegers() {
