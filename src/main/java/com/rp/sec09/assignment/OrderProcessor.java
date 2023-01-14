@@ -9,8 +9,8 @@ public class OrderProcessor {
 
     public static Function<Flux<PurchaseOrder>, Flux<PurchaseOrder>> automotiveProcessing() {
         return flux -> flux
-                            .doOnNext(p -> p.setPrice(1.1 * p.getPrice()))
-                            .doOnNext(p -> p.setItem("{{ " + p.getItem() + " }}"));
+                .doOnNext(p -> p.setPrice(1.1 * p.getPrice()))
+                .doOnNext(p -> p.setItem("{{ " + p.getItem() + " }}"));
     }
 
     public static Function<Flux<PurchaseOrder>, Flux<PurchaseOrder>> kidsProcessing() {
@@ -19,7 +19,7 @@ public class OrderProcessor {
                 .flatMap(p -> Flux.concat(Mono.just(p), getFreeKidsOrder()));
     }
 
-    private static Mono<PurchaseOrder> getFreeKidsOrder(){
+    private static Mono<PurchaseOrder> getFreeKidsOrder() {
         return Mono.fromSupplier(() -> {
             PurchaseOrder purchaseOrder = new PurchaseOrder();
             purchaseOrder.setItem("FREE - " + purchaseOrder.getItem());
