@@ -16,20 +16,16 @@ public class SlackRoom {
     }
 
     public void joinRoom(SlackMember slackMember){
-        System.out.println(slackMember.getName() + "------------- Joined ---------------" + this.name);
-        this.subscribe(slackMember);
-        slackMember.setMessageConsumer(
-                msg -> this.postMessage(msg, slackMember)
-        );
+        System.out.println(
+            slackMember.getName() + "------------- Joined ---------------" + this.name);
+        slackMember.setMessageConsumer(msg -> postMessage(msg, slackMember));
+        this.flux
+            .filter(sm -> !sm.getSender().equals(slackMember.getName()))
+            .doOnNext(sm -> sm.setReceiver(slackMember.getName()))
+            .map(SlackMessage::toString)
+            .subscribe(slackMember::receives);
     }
 
-    private void subscribe(SlackMember slackMember){
-        this.flux
-                .filter(sm -> !sm.getSender().equals(slackMember.getName()))
-                .doOnNext(sm -> sm.setReceiver(slackMember.getName()))
-                .map(SlackMessage::toString)
-                .subscribe(slackMember::receives);
-    }
 
     private void postMessage(String msg, SlackMember slackMember){
         SlackMessage slackMessage = new SlackMessage();
