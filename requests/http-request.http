@@ -1,0 +1,42 @@
+### multipart 요청 샘플
+< {%
+  request.variables.set("firstname", "John")
+%}
+GET http://example.com/api/upload HTTP/1.1
+Content-Type: multipart/form-data
+Content-Disposition: form-data; name="first"; filename="input.txt"
+
+< ./input.txt
+
+### 테스트 요청
+GET https://jsonplaceholder.typicode.com
+    /posts
+    /1
+
+> {%
+  client.test("Request executed successfully", () => {
+    client.assert(response.status == 200, `Response status is not valid [${response.status}]`)
+
+  })
+%}
+
+<> 2023-01-12T110421.200.json
+<> 2023-01-12T104905.200.json
+<> 2023-01-12T104245.200.json
+<> 2023-01-12T104233.404.json
+
+### post test with json
+POST https://jsonplaceholder.typicode.com/posts
+Content-Type: application/json
+
+{
+  "title": "foo",
+  "body": "bar",
+  "userId": 1
+}
+
+### post test with form data
+POST http://localhost:80/api/item
+Content-Type: application/x-www-form-urlencoded
+
+id=99&content=new-element
